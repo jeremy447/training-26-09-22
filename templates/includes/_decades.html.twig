@@ -1,0 +1,7 @@
+<ul>
+    {% for decade in decades %}
+        <li>{{ decade }}</li>
+        {% else %}
+        <li>Nothing in db yet</li>
+    {% endfor %}
+</ul>
