@@ -12,6 +12,6 @@ class DiscordNotification extends Notification implements ChatNotificationInterf
 
     public function asChatMessage(RecipientInterface $recipient, string $transport = null): ?ChatMessage
     {
-        // TODO: Implement asChatMessage() method.
+        return new ChatMessage('');
     }
 }

@@ -12,6 +12,6 @@ class FirebaseNotification extends Notification implements SmsNotificationInterf
 
     public function asSmsMessage(SmsRecipientInterface $recipient, string $transport = null): ?SmsMessage
     {
-        // TODO: Implement asSmsMessage() method.
+        return new SmsMessage('', '');
     }
 }

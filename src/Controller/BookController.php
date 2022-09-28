@@ -18,10 +18,13 @@ class BookController extends AbstractController
     /**
      * @Route("/", name="index", methods={"GET", "POST"})
      */
-    public function index(): Response
+    public function index(BookRepository $repository, int $booksPerPage): Response
     {
+        $books = $repository->findBy([], ['id' => 'DESC'], $booksPerPage);
+        
         return $this->render('book/index.html.twig', [
             'controller_name' => 'BookController',
+            'books' => $books,
         ]);
     }
 

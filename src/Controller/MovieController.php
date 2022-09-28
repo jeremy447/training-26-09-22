@@ -2,7 +2,8 @@
 
 namespace App\Controller;
 
-use App\Entity\Movie;
+use App\Notifier\MovieNotifier;
+use App\Provider\MovieProvider;
 use App\Repository\MovieRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -16,8 +17,9 @@ class MovieController extends AbstractController
     /**
      * @Route("", name="index")
      */
-    public function index(): Response
+    public function index(MovieNotifier $notifier): Response
     {
+        $notifier->sendNotification('FINALLY!');
         return $this->render('movie/index.html.twig', [
             'controller_name' => 'MovieController',
         ]);
@@ -32,6 +34,16 @@ class MovieController extends AbstractController
         
         return $this->render('movie/details.html.twig', [
             'movie' => $movie,
+        ]);
+    }
+
+    /**
+     * @Route("/omdb/{title<[a-zA-Z0-9-_' ]+>}", name="omdb")
+     */
+    public function omdb(string $title, MovieProvider $provider): Response
+    {
+        return $this->render('movie/details.html.twig', [
+            'movie' => $provider->getMovieByTitle($title),
         ]);
     }
 

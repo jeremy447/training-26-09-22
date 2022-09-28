@@ -6,9 +6,13 @@
 <div class="example-wrapper">
     <h1>Movie : {{ movie.title }}</h1>
 
+    <img src="{{ movie.poster }}" alt="{{ movie.title }} poster" class="float-end">
     <ul>
+        <li>Id : {{ movie.id }}</li>
         <li>Released at : {{ movie.releasedAt|date('d M Y') }}</li>
-        <li>Genres : {{ movie.genres|join(', ') }}</li>
+        <li>Country : {{ movie.country }}</li>
+        <li>Genres : {{ movie.genres|reduce((carry, genre) => carry != '' ? carry ~ ', ' ~ genre.name : genre.name) }}</li>
+        <li>Price : {{ movie.price }}</li>
     </ul>
 </div>
 {% endblock %}

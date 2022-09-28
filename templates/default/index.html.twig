@@ -2,6 +2,10 @@
 
 {% block title %}Hello DefaultController!{% endblock %}
 
+{% block header %}
+    {{ parent() }}
+{% endblock %}
+
 {% block body %}
 <div class="example-wrapper">
     <h1>Hello {{ controller_name }}! ✅</h1>
