@@ -50,7 +50,7 @@ security:
     access_control:
         # - { path: ^/admin/login$, condition: "user == 'anon'" }
         - { path: ^/admin/\w+/new, roles: ROLE_USER }
-        - { path: ^/admin/book/\d+/edit, roles: ROLE_USER }
+        - { path: ^/admin/\w+/\d+/edit, roles: ROLE_USER }
         - { path: ^/admin, roles: ROLE_ADMIN }
         # - { path: ^/profile, roles: ROLE_USER }
 

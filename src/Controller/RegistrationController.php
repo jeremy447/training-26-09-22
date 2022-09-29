@@ -32,7 +32,9 @@ class RegistrationController extends AbstractController
                     $user,
                     $form->get('plainPassword')->getData()
                 )
-            );
+            )
+                ->setLastConnectedAt()
+            ;
 
             $entityManager->persist($user);
             $entityManager->flush();

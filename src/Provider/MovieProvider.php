@@ -7,22 +7,26 @@ use App\Entity\Movie;
 use App\Repository\MovieRepository;
 use App\Transformer\OmdbMovieTranformer;
 use Symfony\Component\Console\Style\SymfonyStyle;
+use Symfony\Component\Security\Core\Security;
 
 class MovieProvider
 {
     private MovieRepository $repository;
     private OmdbApiConsumer $consumer;
     private OmdbMovieTranformer $tranformer;
+    private Security $security;
     private ?SymfonyStyle $io = null;
 
     public function __construct(
         MovieRepository $repository,
         OmdbApiConsumer $consumer,
-        OmdbMovieTranformer $tranformer
+        OmdbMovieTranformer $tranformer,
+        Security $security
     ) {
         $this->repository = $repository;
         $this->consumer = $consumer;
         $this->tranformer = $tranformer;
+        $this->security = $security;
     }
 
     public function setIo(SymfonyStyle $io): void
@@ -51,6 +55,7 @@ class MovieProvider
         }
 
         $movie = $this->tranformer->transform($data);
+        $movie->setCreatedBy($this->security->getUser());
         $this->sendOutput('text', 'Adding movie in database.');
         $this->repository->add($movie, true);
 
