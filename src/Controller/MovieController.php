@@ -17,11 +17,11 @@ class MovieController extends AbstractController
     /**
      * @Route("", name="index")
      */
-    public function index(MovieNotifier $notifier): Response
+    public function index(MovieRepository $repository, MovieNotifier $notifier): Response
     {
         $notifier->sendNotification('FINALLY!');
         return $this->render('movie/index.html.twig', [
-            'controller_name' => 'MovieController',
+            'movies' => $repository->findAll(),
         ]);
     }
 
@@ -47,10 +47,10 @@ class MovieController extends AbstractController
         ]);
     }
 
-    public function decades()
+    public function decades(MovieRepository $repository)
     {
         return $this->render('includes/_decades.html.twig', [
-            'decades' => [],
+            'decades' => $repository->getDecades(),
         ]);
     }
 }

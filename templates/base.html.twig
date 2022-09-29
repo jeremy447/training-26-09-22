@@ -19,13 +19,20 @@
                 {{ include('includes/_navbar.html.twig', {}, with_context = false) }}
             {% endblock %}
         </header>
-        <main class="container">
-            {% block body %}{% endblock %}
-       </main>
-    <aside>
-        {% block decades %}
-            {{ render_esi(controller('App\\Controller\\MovieController::decades')) }}
-        {% endblock %}
-    </aside>
+        <main class="container-fluid mt-5">
+            <div class="row">
+                <aside class="col-1">
+                    {% block aside %}{% endblock %}
+                </aside>
+                <section class="col-10">
+                    {% block body %}{% endblock %}
+                </section>
+                <aside class="col-1">
+                    {% block decades %}
+                        {{ render(controller('App\\Controller\\MovieController::decades')) }}
+                    {% endblock %}
+                </aside>
+            </div>
+        </main>
     </body>
 </html>

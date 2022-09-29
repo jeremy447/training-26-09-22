@@ -41,6 +41,16 @@ class MovieRepository extends ServiceEntityRepository
         }
     }
 
+    public function getDecades()
+    {
+        $qb = $this->createQueryBuilder('m');
+        return $qb->select('YEAR(m.releasedAt) / 10 * 10 as year')
+            ->groupBy('year')
+            ->getQuery()
+            ->getResult()
+            ;
+    }
+
     public function fetch(string $title)
     {
         $qb = $this->createQueryBuilder('m');
