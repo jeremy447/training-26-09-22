@@ -38,7 +38,7 @@ class MovieFindCommand extends Command
             ->setName('app:movie:find')
             ->setDescription('Find a movie by title or Imdb ID')
             ->addArgument('value', InputArgument::OPTIONAL, 'The title or if of the movie you want.')
-            ->addArgument('mode', InputArgument::OPTIONAL, 'The type of value you provided (title or id)', 'title')
+            ->addArgument('mode', InputArgument::OPTIONAL, 'The type of value you provided (title or id)')
         ;
     }
 
@@ -52,7 +52,7 @@ class MovieFindCommand extends Command
         }
 
         $mode = $input->getArgument('mode');
-        if (null === $mode || !\in_array($mode, ['id', 'title', 'i', 't'])) {
+        if (null === $mode || !\array_key_exists($mode, self::MODES)) {
             $mode = $io->choice(sprintf("Is \"%s\" a title or an Imdb ID?", $value), ['t' => 'title', 'i'=> 'id']);
         }
         $mode = self::MODES[$mode];
@@ -69,7 +69,7 @@ class MovieFindCommand extends Command
         try {
             $method = 'getMovieBy' . ucfirst($mode);
             $movie = $this->provider->$method($value);
-        }catch (NotFoundHttpException $e) {
+        } catch (NotFoundHttpException $e) {
             $io->error('Movie not found!');
 
             return Command::FAILURE;
